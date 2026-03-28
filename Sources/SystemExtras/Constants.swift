@@ -1,4 +1,4 @@
-#if SYSTEM_PACKAGE_DARWIN
+#if canImport(Darwin)
 import Darwin
 #elseif canImport(Glibc)
 import CSystem
@@ -28,7 +28,7 @@ internal var _AT_SYMLINK_FOLLOW: CInt { AT_SYMLINK_FOLLOW }
 @_alwaysEmitIntoClient
 internal var _AT_REMOVEDIR: CInt { AT_REMOVEDIR }
 #endif
-#if SYSTEM_PACKAGE_DARWIN
+#if canImport(Darwin)
 @_alwaysEmitIntoClient
 internal var _AT_REALDEV: CInt { AT_REALDEV }
 @_alwaysEmitIntoClient
@@ -128,16 +128,16 @@ internal var _S_IFSOCK: CInterop.Mode { S_IFSOCK }
 @_alwaysEmitIntoClient
 internal var _CLOCK_BOOTTIME: CInterop.ClockId { CLOCK_BOOTTIME }
 #endif
-#if SYSTEM_PACKAGE_DARWIN
+#if canImport(Darwin)
 @_alwaysEmitIntoClient
 internal var _CLOCK_MONOTONIC_RAW: CInterop.ClockId { CLOCK_MONOTONIC_RAW }
 #endif
-#if SYSTEM_PACKAGE_DARWIN || os(Linux) || os(Android) || os(OpenBSD) || os(FreeBSD) || os(WASI)
+#if canImport(Darwin) || os(Linux) || os(Android) || os(OpenBSD) || os(FreeBSD) || os(WASI)
 @_alwaysEmitIntoClient
 internal var _CLOCK_MONOTONIC: CInterop.ClockId { CLOCK_MONOTONIC }
 #endif
 
-#if SYSTEM_PACKAGE_DARWIN
+#if canImport(Darwin)
 @_alwaysEmitIntoClient
 internal var _CLOCK_UPTIME_RAW: CInterop.ClockId { CLOCK_UPTIME_RAW }
 #endif

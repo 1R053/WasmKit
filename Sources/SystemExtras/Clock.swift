@@ -1,4 +1,4 @@
-#if SYSTEM_PACKAGE_DARWIN
+#if canImport(Darwin)
 import Darwin
 #elseif canImport(Glibc)
 import CSystem
@@ -36,12 +36,12 @@ extension Clock {
   public static var boottime: Clock { Clock(rawValue: CLOCK_BOOTTIME) }
   #endif
 
-  #if SYSTEM_PACKAGE_DARWIN
+  #if canImport(Darwin)
   @_alwaysEmitIntoClient
   public static var rawMonotonic: Clock { Clock(rawValue: _CLOCK_MONOTONIC_RAW) }
   #endif
 
-  #if SYSTEM_PACKAGE_DARWIN || os(Linux) || os(Android) || os(OpenBSD) || os(FreeBSD) || os(WASI)
+  #if canImport(Darwin) || os(Linux) || os(Android) || os(OpenBSD) || os(FreeBSD) || os(WASI)
   @_alwaysEmitIntoClient
   public static var monotonic: Clock { Clock(rawValue: _CLOCK_MONOTONIC) }
   #endif
@@ -51,7 +51,7 @@ extension Clock {
   public static var uptime: Clock { Clock(rawValue: _CLOCK_UPTIME) }
   #endif
 
-  #if SYSTEM_PACKAGE_DARWIN
+  #if canImport(Darwin)
   @_alwaysEmitIntoClient
   public static var rawUptime: Clock { Clock(rawValue: _CLOCK_UPTIME_RAW) }
   #endif
