@@ -182,6 +182,8 @@ struct PathResolution {
             throw WASIAbi.Errno.EPERM
         }
 
+        let originalBaseFd = self.baseFd
+
         while let component = components.popLast() {
             switch component.kind {
             case .currentDirectory:
@@ -189,6 +191,16 @@ struct PathResolution {
             case .parentDirectory:
                 try parentDirectory()
             case .regular: try regular(component: component)
+            }
+        }
+
+        // If resolution didn't open any new fd (e.g. path was "."),
+        // baseFd is still the original fd. We must dup() it so the
+        // caller gets an independent fd they can safely close without
+        // invalidating the original (e.g. a preopened directory fd).
+        if self.baseFd.rawValue == originalBaseFd.rawValue && openDirectories.isEmpty {
+            return try WASIAbi.Errno.translatingPlatformErrno {
+                try self.baseFd.open(at: ".", .readOnly, options: .directory)
             }
         }
         return self.baseFd
