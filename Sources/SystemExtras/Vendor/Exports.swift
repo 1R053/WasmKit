@@ -12,7 +12,7 @@
 
 // TODO: Should CSystem just include all the header files we need?
 
-#if SYSTEM_PACKAGE_DARWIN
+#if canImport(Darwin)
 import Darwin
 #elseif os(Windows)
 import CSystem
@@ -38,7 +38,7 @@ internal typealias _COffT = off_t
 
 // MARK: syscalls and variables
 
-#if SYSTEM_PACKAGE_DARWIN
+#if canImport(Darwin)
 internal var system_errno: CInt {
   get { Darwin.errno }
   set { Darwin.errno = newValue }

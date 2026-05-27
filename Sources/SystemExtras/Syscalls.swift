@@ -1,4 +1,4 @@
-#if SYSTEM_PACKAGE_DARWIN
+#if canImport(Darwin)
 import Darwin
 #elseif canImport(Glibc)
 import CSystem
@@ -127,7 +127,7 @@ internal func system_symlinkat(
 }
 
 extension CInterop {
-  #if SYSTEM_PACKAGE_DARWIN
+  #if canImport(Darwin)
   public typealias DirP = UnsafeMutablePointer<DIR>
   #elseif os(Linux) || os(Android) || os(WASI)
   public typealias DirP = OpaquePointer

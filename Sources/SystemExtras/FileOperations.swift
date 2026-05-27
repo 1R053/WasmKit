@@ -1,4 +1,4 @@
-#if SYSTEM_PACKAGE_DARWIN
+#if canImport(Darwin)
 import Darwin
 #elseif canImport(Glibc)
 import CSystem
@@ -21,7 +21,7 @@ import WASILibc
 import SystemPackage
 
 extension FileDescriptor {
-  #if SYSTEM_PACKAGE_DARWIN
+  #if canImport(Darwin)
 
   /// Announces an intention to read specific region of file data.
   ///
@@ -284,7 +284,7 @@ extension FileDescriptor {
 
     @_alwaysEmitIntoClient
     public var accessTime: Clock.TimeSpec {
-      #if SYSTEM_PACKAGE_DARWIN
+      #if canImport(Darwin)
       Clock.TimeSpec(rawValue: self.rawValue.st_atimespec)
       #else
       Clock.TimeSpec(rawValue: self.rawValue.st_atim)
@@ -293,7 +293,7 @@ extension FileDescriptor {
 
     @_alwaysEmitIntoClient
     public var modificationTime: Clock.TimeSpec {
-      #if SYSTEM_PACKAGE_DARWIN
+      #if canImport(Darwin)
       Clock.TimeSpec(rawValue: self.rawValue.st_mtimespec)
       #else
       Clock.TimeSpec(rawValue: self.rawValue.st_mtim)
@@ -302,7 +302,7 @@ extension FileDescriptor {
 
     @_alwaysEmitIntoClient
     public var creationTime: Clock.TimeSpec {
-      #if SYSTEM_PACKAGE_DARWIN
+      #if canImport(Darwin)
       Clock.TimeSpec(rawValue: self.rawValue.st_ctimespec)
       #else
       Clock.TimeSpec(rawValue: self.rawValue.st_ctim)
@@ -623,7 +623,7 @@ extension FileDescriptor {
     }
     #else
     nothingOrErrno(retryOnInterrupt: false) {
-      #if SYSTEM_PACKAGE_DARWIN
+      #if canImport(Darwin)
       system_fcntl(self.rawValue, F_FULLFSYNC)
       #else
       system_fsync(self.rawValue)
@@ -641,7 +641,7 @@ extension FileDescriptor {
     return self._sync()
     #else
     nothingOrErrno(retryOnInterrupt: false) {
-      #if SYSTEM_PACKAGE_DARWIN
+      #if canImport(Darwin)
       system_fcntl(self.rawValue, F_FULLFSYNC)
       #elseif os(Linux) || os(FreeBSD) || os(OpenBSD) || os(Android) || os(Cygwin) || os(PS4)
       system_fdatasync(self.rawValue)

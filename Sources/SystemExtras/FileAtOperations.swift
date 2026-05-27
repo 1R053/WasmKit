@@ -1,4 +1,4 @@
-#if SYSTEM_PACKAGE_DARWIN
+#if canImport(Darwin)
 import Darwin
 #elseif canImport(Glibc)
 import CSystem
